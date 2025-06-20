@@ -1,0 +1,20 @@
+# 源码和开发相关
+src/
+.git/
+.gitignore
+.vscode/
+.idea/
+tsconfig.json
+build.js
+README.md
+node_modules/
+
+# 日志和临时文件
+*.log
+*.tmp
+*.temp
+
+# 其他
+*.swp
+*.swo
+*~ 

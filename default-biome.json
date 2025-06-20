@@ -1,0 +1,53 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+	"overrides": [
+		{
+			"includes": [
+				"**/*.vue",
+				"**/*.ts",
+				"**/*.tsx",
+				"**/*.js",
+				"**/*.jsx"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConst": "off"
+					},
+					"correctness": {
+						"noUnusedVariables": "off",
+						"noUnusedImports": "off"
+					},
+					"suspicious": {
+						"noExplicitAny": "off"
+					},
+					"complexity": {
+						"useOptionalChain": "off"
+					}
+				}
+			}
+		}
+	],
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"semicolons": "asNeeded"
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": false
+		}
+	}
+}
