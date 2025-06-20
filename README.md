@@ -1,4 +1,4 @@
-# Vite Biome 插件
+# Vite Biome 插件 `vite-plugin-biome-preset`
 
 一个将 [Biome](https://biomejs.dev/) 集成到 [Vite](https://vitejs.dev/) 构建工具中的插件，提供实时代码格式化和代码检查功能。
 
@@ -29,11 +29,11 @@ pnpm add vite-plugin-biome-preset
 
 ```typescript
 import { defineConfig } from 'vite'
-import biomePlugin from 'vite-plugin-biome-preset'
+import viteBiomePlugin from 'vite-plugin-biome-preset'
 
 export default defineConfig({
   plugins: [
-    biomePlugin({
+    viteBiomePlugin({
       formatOnSave: true, // 启用保存时格式化
       extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue'], // 支持的文件扩展名
       sourcePattern: './src', // 源代码目录
@@ -54,61 +54,11 @@ export default defineConfig({
 
 ### Biome 配置
 
-项目包含一个默认的 Biome 配置文件 `default-biome.json`，你可以复制到项目根目录并重命名为 `biome.json`：
+项目包含一个默认的 Biome 配置文件 `default-biome.json`，你可以在项目根目录创建自己的`biome.json`：
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
-  "overrides": [
-    {
-      "includes": [
-        "**/*.vue",
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.js",
-        "**/*.jsx"
-      ],
-      "linter": {
-        "rules": {
-          "style": {
-            "useConst": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off",
-            "noUnusedImports": "off"
-          },
-          "suspicious": {
-            "noExplicitAny": "off"
-          },
-          "complexity": {
-            "useOptionalChain": "off"
-          }
-        }
-      }
-    }
-  ],
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "space",
-    "lineWidth": 120
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "single",
-      "semicolons": "asNeeded"
-    }
-  },
-  "json": {
-    "formatter": {
-      "enabled": false
-    }
-  }
+	"extends": ["vite-plugin-biome-preset/default-biome.json"]
 }
 ```
 
@@ -135,11 +85,11 @@ export default defineConfig({
 
 ```typescript
 import { defineConfig } from 'vite'
-import biomePlugin from 'vite-plugin-biome-preset'
+import viteBiomePlugin from 'vite-plugin-biome-preset'
 
 export default defineConfig({
   plugins: [
-    biomePlugin({
+    viteBiomePlugin({
       formatOnSave: false, // 禁用自动格式化
       sourcePattern: './src/**/*' // 检查 src 目录下的所有文件
     })
@@ -151,11 +101,11 @@ export default defineConfig({
 
 ```typescript
 import { defineConfig } from 'vite'
-import biomePlugin from 'vite-plugin-biome-preset'
+import viteBiomePlugin from 'vite-plugin-biome-preset'
 
 export default defineConfig({
   plugins: [
-    biomePlugin({
+    viteBiomePlugin({
       formatOnSave: true, // 启用自动格式化
       extensions: ['.js', '.ts', '.jsx', '.tsx'], // 仅支持 JavaScript/TypeScript 文件
       configPath: './config/biome.json' // 自定义配置文件路径
