@@ -31,19 +31,107 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"complexity": {
+				"noBannedTypes": "off",
+				"noExtraBooleanCast": "error",
+				"noUselessCatch": "error",
+				"noUselessConstructor": "error",
+				"noUselessLoneBlockStatements": "error",
+				"noUselessRename": "error",
+				"noUselessTernary": "error",
+				"noUselessTypeConstraint": "off",
+				"noUselessUndefinedInitialization": "error",
+				"noVoid": "off",
+				"useLiteralKeys": "error",
+				"useRegexLiterals": "off"
+			},
+			"correctness": {
+				"noConstAssign": "error",
+				"noConstantCondition": "error",
+				"noEmptyCharacterClassInRegex": "error",
+				"noEmptyPattern": "error",
+				"noGlobalObjectCalls": "error",
+				"noInvalidConstructorSuper": "error",
+				"noInvalidUseBeforeDeclaration": "off",
+				"noPrecisionLoss": "error",
+				"noSelfAssign": "off",
+				"noSwitchDeclarations": "off",
+				"noUndeclaredVariables": "off",
+				"noUnreachable": "error",
+				"noUnreachableSuper": "error",
+				"noUnsafeFinally": "error",
+				"noUnusedVariables": "off",
+				"useIsNan": "error"
+			},
+			"security": { "noGlobalEval": "error" },
+			"style": {
+				"noInferrableTypes": "error",
+				"noNamespace": "error",
+				"noNonNullAssertion": "warn",
+				"noYodaExpression": "error",
+				"useAsConstAssertion": "error",
+				"useBlockStatements": "error",
+				"useConsistentBuiltinInstantiation": "error",
+				"useConst": "off",
+				"useSingleVarDeclarator": "error"
+			},
+			"suspicious": {
+				"noAsyncPromiseExecutor": "off",
+				"noCatchAssign": "error",
+				"noClassAssign": "error",
+				"noCompareNegZero": "error",
+				"noConsole": "off",
+				"noControlCharactersInRegex": "error",
+				"noDebugger": "off",
+				"noDoubleEquals": "error",
+				"noDuplicateCase": "error",
+				"noDuplicateClassMembers": "error",
+				"noDuplicateObjectKeys": "error",
+				"noDuplicateParameters": "error",
+				"noEmptyBlockStatements": "error",
+				"noExplicitAny": "off",
+				"noExtraNonNullAssertion": "error",
+				"noFallthroughSwitchClause": "error",
+				"noFunctionAssign": "error",
+				"noGlobalAssign": "error",
+				"noImportAssign": "off",
+				"noMisleadingCharacterClass": "error",
+				"noMisleadingInstantiator": "error",
+				"noPrototypeBuiltins": "off",
+				"noRedeclare": "error",
+				"noSelfCompare": "error",
+				"noShadowRestrictedNames": "error",
+				"noSparseArray": "error",
+				"noUnsafeDeclarationMerging": "off",
+				"noUnsafeNegation": "error",
+				"useDefaultSwitchClauseLast": "error",
+				"useNamespaceKeyword": "error"
+			}
 		}
 	},
 	"formatter": {
-		"enabled": true,
-		"indentStyle": "space",
-		"lineWidth": 120
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 120,
+    "attributePosition": "auto"
 	},
 	"javascript": {
-		"formatter": {
-			"quoteStyle": "single",
-			"semicolons": "asNeeded"
-		}
+    "globals": ["document", "navigator", "window"],
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "attributePosition": "auto"
+    }
 	},
 	"json": {
 		"formatter": {

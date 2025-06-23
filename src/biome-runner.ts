@@ -7,6 +7,7 @@ export interface BiomeRunnerOptions {
   configPath?: string
 }
 
+const biomeExecutable = 'biome'
 export class BiomeRunner {
   private options: Required<BiomeRunnerOptions>
 
@@ -15,7 +16,7 @@ export class BiomeRunner {
       formatOnSave: options.formatOnSave ?? false,
       extensions: options.extensions ?? ['.js', '.ts', '.jsx', '.tsx', '.vue'],
       sourcePattern: options.sourcePattern ?? './src',
-      configPath: options.configPath ?? 'biome.json',
+      configPath: options.configPath ?? './biome.json',
     }
   }
 
@@ -40,9 +41,9 @@ export class BiomeRunner {
         args.push(this.options.sourcePattern)
       }
 
-      console.log(`🔄 执行 Biome format: biome ${args.join(' ')}`)
+      console.log(`🔄 执行 Biome format: ${biomeExecutable} ${args.join(' ')}`)
 
-      const result = execSync(`npx biome ${args.join(' ')}`, {
+      const result = execSync(`${biomeExecutable} ${args.join(' ')}`, {
         encoding: 'utf8',
         stdio: 'pipe',
       })
@@ -50,11 +51,10 @@ export class BiomeRunner {
       console.log('✅ Biome format 完成')
       return result
     } catch (error: any) {
-      if (error.stdout) {
-        console.log('📝 Biome format 输出:', error.stdout)
-      }
       if (error.stderr) {
-        // console.log('⚠️  Biome format 警告:', error.stderr)
+        console.log('⚠️  Biome format 警告:', error.stderr)
+      } else if (error.stdout) {
+        console.log('📝 Biome format 输出:', error.stdout)
       }
       console.log('✅ Biome format 完成（可能有警告）')
       return null
@@ -73,9 +73,9 @@ export class BiomeRunner {
         args.push(this.options.sourcePattern)
       }
 
-      console.log(`🔍 执行 Biome lint: biome ${args.join(' ')}`)
+      console.log(`🔄 执行 Biome lint: ${biomeExecutable} ${args.join(' ')}`)
 
-      const result = execSync(`npx biome ${args.join(' ')}`, {
+      const result = execSync(`${biomeExecutable} ${args.join(' ')}`, {
         encoding: 'utf8',
         stdio: 'pipe',
       })
@@ -83,11 +83,10 @@ export class BiomeRunner {
       console.log('✅ Biome lint 完成')
       return result
     } catch (error: any) {
-      if (error.stdout) {
-        console.log('📝 Biome lint 输出:', error.stdout)
-      }
       if (error.stderr) {
-        // console.log('⚠️  Biome lint 警告:', error.stderr)
+        console.log('⚠️  Biome lint 警告:', error.stderr)
+      } else if (error.stdout) {
+        console.log('📝 Biome lint 输出:', error.stdout)
       }
       console.log('✅ Biome lint 完成（可能有警告）')
       return null

@@ -13,7 +13,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     rollupOptions: {
-      external: ['vite', 'child_process', 'fs', 'path', 'url'],
+      external: ['vite', 'child_process', 'fs', 'path', 'url', 'node:path'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

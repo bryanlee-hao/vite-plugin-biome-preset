@@ -1,4 +1,4 @@
-import type { ResolvedConfig, ViteDevServer } from 'vite'
+import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite'
 import { BiomeRunner, type BiomeRunnerOptions } from './biome-runner'
 
 interface ViteBiomePluginOptions extends BiomeRunnerOptions {
@@ -6,7 +6,7 @@ interface ViteBiomePluginOptions extends BiomeRunnerOptions {
 }
 
 // Biome Vite 插件
-const viteBiomePlugin = (options: ViteBiomePluginOptions = {}) => {
+const viteBiomePlugin = (options: ViteBiomePluginOptions = {}): Plugin => {
   let isWatchMode = false
   const biomeRunner = new BiomeRunner(options)
 
