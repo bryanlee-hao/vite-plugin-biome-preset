@@ -1,4 +1,5 @@
 import { execSync } from 'child_process'
+import { resolve } from 'node:path'
 
 export interface BiomeRunnerOptions {
   formatOnSave?: boolean
@@ -29,17 +30,50 @@ export class BiomeRunner {
     )
   }
 
+  // 检查文件是否在 sourcePattern 范围内
+  private isFileInSourcePattern(file: string): boolean {
+    try {
+      const resolvedFile = resolve(file)
+      const resolvedSourcePattern = resolve(this.options.sourcePattern)
+
+      // 如果 sourcePattern 是相对路径，检查文件是否在该目录下
+      if (!this.options.sourcePattern.startsWith('**')) {
+        return resolvedFile.startsWith(resolvedSourcePattern)
+      }
+
+      // 如果 sourcePattern 包含通配符，这里可以添加更复杂的逻辑
+      // 目前简单处理，假设是相对路径
+      return true
+    } catch {
+      return false
+    }
+  }
+  // 过滤文件列表，只保留在 sourcePattern 中的文件
+  private getFormatFilesPaths(files: string[]) {
+    // 如果指定了具体文件，则使用文件路径，否则使用默认模式
+    if (files && files.length > 0 && !files[0].includes('**')) {
+      // 过滤文件，只保留在 sourcePattern 中的文件
+      const filteredFiles = files.filter(file => this.isFileInSourcePattern(file))
+      if (filteredFiles.length === 0) {
+        console.log(`⚠️  没有文件在指定的 sourcePattern ${this.options.sourcePattern} 范围内`)
+        return null
+      }
+      return filteredFiles
+    } else {
+      return [this.options.sourcePattern]
+    }
+  }
+
   // 运行 Biome format
   async runFormat(files?: string[]): Promise<string | null> {
     try {
       const args = ['check', '--write', '--config-path', this.options.configPath]
 
-      // 如果指定了具体文件，则使用文件路径，否则使用默认模式
-      if (files && files.length > 0 && !files[0].includes('**')) {
-        args.push(...files)
-      } else {
-        args.push(this.options.sourcePattern)
+      const filteredFiles = this.getFormatFilesPaths(files || [])
+      if (!filteredFiles?.length) {
+        return null
       }
+      args.push(...filteredFiles)
 
       console.log(`🔄 执行 Biome format: ${biomeExecutable} ${args.join(' ')}`)
 
@@ -66,12 +100,11 @@ export class BiomeRunner {
     try {
       const args = ['lint', '--config-path', this.options.configPath]
 
-      // 如果指定了具体文件，则使用文件路径，否则使用默认模式
-      if (files && files.length > 0 && !files[0].includes('**')) {
-        args.push(...files)
-      } else {
-        args.push(this.options.sourcePattern)
+      const filteredFiles = this.getFormatFilesPaths(files || [])
+      if (!filteredFiles?.length) {
+        return null
       }
+      args.push(...filteredFiles)
 
       console.log(`🔄 执行 Biome lint: ${biomeExecutable} ${args.join(' ')}`)
 

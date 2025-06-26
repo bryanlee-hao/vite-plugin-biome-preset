@@ -8,6 +8,8 @@ export declare class BiomeRunner {
     private options;
     constructor(options?: BiomeRunnerOptions);
     isBiomeFile(file: string): boolean;
+    private isFileInSourcePattern;
+    private getFormatFilesPaths;
     runFormat(files?: string[]): Promise<string | null>;
     runLint(files?: string[]): Promise<string | null>;
     runOperation(files?: string[]): Promise<void>;

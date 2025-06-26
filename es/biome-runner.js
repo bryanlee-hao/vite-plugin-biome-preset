@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import { resolve } from "node:path";
 const biomeExecutable = "biome";
 class BiomeRunner {
   constructor(options = {}) {
@@ -13,15 +14,41 @@ class BiomeRunner {
   isBiomeFile(file) {
     return this.options.extensions.some((ext) => file.endsWith(ext)) && !file.includes("node_modules") && !file.includes(".git");
   }
+  // 检查文件是否在 sourcePattern 范围内
+  isFileInSourcePattern(file) {
+    try {
+      const resolvedFile = resolve(file);
+      const resolvedSourcePattern = resolve(this.options.sourcePattern);
+      if (!this.options.sourcePattern.startsWith("**")) {
+        return resolvedFile.startsWith(resolvedSourcePattern);
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  // 过滤文件列表，只保留在 sourcePattern 中的文件
+  getFormatFilesPaths(files) {
+    if (files && files.length > 0 && !files[0].includes("**")) {
+      const filteredFiles = files.filter((file) => this.isFileInSourcePattern(file));
+      if (filteredFiles.length === 0) {
+        console.log(`⚠️  没有文件在指定的 sourcePattern ${this.options.sourcePattern} 范围内`);
+        return null;
+      }
+      return filteredFiles;
+    } else {
+      return [this.options.sourcePattern];
+    }
+  }
   // 运行 Biome format
   async runFormat(files) {
     try {
       const args = ["check", "--write", "--config-path", this.options.configPath];
-      if (files && files.length > 0 && !files[0].includes("**")) {
-        args.push(...files);
-      } else {
-        args.push(this.options.sourcePattern);
+      const filteredFiles = this.getFormatFilesPaths(files || []);
+      if (!filteredFiles?.length) {
+        return null;
       }
+      args.push(...filteredFiles);
       console.log(`🔄 执行 Biome format: ${biomeExecutable} ${args.join(" ")}`);
       const result = execSync(`${biomeExecutable} ${args.join(" ")}`, {
         encoding: "utf8",
@@ -43,11 +70,11 @@ class BiomeRunner {
   async runLint(files) {
     try {
       const args = ["lint", "--config-path", this.options.configPath];
-      if (files && files.length > 0 && !files[0].includes("**")) {
-        args.push(...files);
-      } else {
-        args.push(this.options.sourcePattern);
+      const filteredFiles = this.getFormatFilesPaths(files || []);
+      if (!filteredFiles?.length) {
+        return null;
       }
+      args.push(...filteredFiles);
       console.log(`🔄 执行 Biome lint: ${biomeExecutable} ${args.join(" ")}`);
       const result = execSync(`${biomeExecutable} ${args.join(" ")}`, {
         encoding: "utf8",
