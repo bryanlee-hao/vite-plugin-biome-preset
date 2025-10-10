@@ -47,6 +47,7 @@
 				"useRegexLiterals": "off"
 			},
 			"correctness": {
+				"noUnusedFunctionParameters": "off",
 				"noConstAssign": "error",
 				"noConstantCondition": "error",
 				"noEmptyCharacterClassInRegex": "error",
@@ -66,12 +67,13 @@
 			},
 			"security": { "noGlobalEval": "error" },
 			"style": {
+				"useTemplate": "off",
+				"useBlockStatements": "off",
 				"noInferrableTypes": "error",
 				"noNamespace": "error",
 				"noNonNullAssertion": "warn",
 				"noYodaExpression": "error",
 				"useAsConstAssertion": "error",
-				"useBlockStatements": "error",
 				"useConsistentBuiltinInstantiation": "error",
 				"useConst": "off",
 				"useSingleVarDeclarator": "error"
@@ -89,7 +91,7 @@
 				"noDuplicateClassMembers": "error",
 				"noDuplicateObjectKeys": "error",
 				"noDuplicateParameters": "error",
-				"noEmptyBlockStatements": "error",
+				"noEmptyBlockStatements": "off",
 				"noExplicitAny": "off",
 				"noExtraNonNullAssertion": "error",
 				"noFallthroughSwitchClause": "error",
@@ -107,6 +109,9 @@
 				"noUnsafeNegation": "error",
 				"useDefaultSwitchClauseLast": "error",
 				"useNamespaceKeyword": "error"
+			},
+			"performance": {
+				"noAccumulatingSpread": "off"
 			}
 		}
 	},

@@ -21,7 +21,7 @@ export default defineConfig({
         chunkFileNames: '[name].js',
         assetFileNames: '[name].[ext]',
         format: 'es',
-        exports: 'named'
+        // exports: 'named'
       }
     },
     target: 'node18',
